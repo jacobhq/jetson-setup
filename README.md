@@ -149,7 +149,8 @@ SD cards are very slow, use an external SSD instead!
         sudo docker info | grep 'Docker Root Dir'
         ```
         You should sse `Docker Root Dir: /mnt/docker`
-    12. Delete `/var/lib/docker`
+        
+    13. Delete `/var/lib/docker`
         ```
         sudo rm -rf /var/lib/docker
         ```
