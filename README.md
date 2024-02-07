@@ -60,13 +60,17 @@ Congrats, your jetson is ready to use!
 ## Continuation: set up jetson-containers, docker with external drive [WIP]
 SD cards are very slow, use an external SSD instead!
 
-1. Plug in an SSD (all data on it will be ereased)
-2. [Optional] Run `lsblk` to find your drive if you don't already know it
-3. Assuming no other drives are plugged in, run, where `a` is your drive:
+1. Add yourself to the `docker` group:
+   ```
+   sudo usermod -aG docker $USER
+   ```
+2. Plug in an SSD (all data on it will be ereased)
+3. [Optional] Run `lsblk` to find your drive if you don't already know it
+4. Assuming no other drives are plugged in, run, where `a` is your drive:
    ```
    sudo parted /dev/sda
    ```
-4. In the resulting shell, erease the disk, remove each partition with rm, where 1 is the partition number:
+5. In the resulting shell, erease the disk, remove each partition with rm, where 1 is the partition number:
    ```
    print
    ```
@@ -76,7 +80,7 @@ SD cards are very slow, use an external SSD instead!
    ```
    quit
    ```
-5. Create two partitions (I like to split the disk in half, half for docker, half for models):
+6. Create two partitions (I like to split the disk in half, half for docker, half for models):
    ```
    sudo parted /dev/sda
    ```
@@ -89,7 +93,7 @@ SD cards are very slow, use an external SSD instead!
    ```
    quit
    ```
-6. Now sort out docker:
+7. Now sort out docker:
    
     1. Create docker directory:
        ```
@@ -145,7 +149,7 @@ SD cards are very slow, use an external SSD instead!
         sudo docker info | grep 'Docker Root Dir'
         ```
         You should sse `Docker Root Dir: /mnt/docker`
-  7. Over half way there! Now let's sort out the `data` directory used by `jetson-containers`:
+  8. Over half way there! Now let's sort out the `data` directory used by `jetson-containers`:
 
 [^1]: See NVIDIA's [official getting started guide](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write)
 [^2]: Instructions from NVIDIA's [setup in headless mode](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#setup)
