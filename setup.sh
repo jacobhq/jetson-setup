@@ -8,14 +8,14 @@ sudo apt install -y nano git python3-pip
 # Add the current user to the docker group
 sudo usermod -aG docker $USER
 
-# Set up a new drive
-sudo parted /dev/sda <<EOF
-print
-rm 1
-mkpart primary ext4 0GB 120GB
-mkpart primary ext4 120GB 240GB
-quit
-EOF
+# Don not set up a new drive
+# sudo parted /dev/sda <<EOF
+# print
+# rm 1
+# mkpart primary ext4 0GB 120GB
+# mkpart primary ext4 120GB 240GB
+# quit
+# EOF
 
 # Setup drive in docker
 sudo mkdir -p /mnt/docker
