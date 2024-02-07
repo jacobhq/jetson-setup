@@ -25,9 +25,9 @@ part_uuid=$(sudo blkid -o value -s UUID /dev/sda1)
 # Add entry to /etc/fstab
 echo "UUID=$part_uuid /mnt/docker ext4 defaults 0" | sudo tee -a /etc/fstab
 
-# Change ownership and copy docker data
+# Change ownership but do not copy docker data
 sudo chown $USER:$USER -R /mnt/docker
-sudo cp -r /var/lib/docker /mnt/docker
+# sudo cp -r /var/lib/docker /mnt/docker
 
 # Configure Docker daemon
 sudo tee /etc/docker/daemon.json > /dev/null <<EOF
