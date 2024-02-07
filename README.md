@@ -89,10 +89,69 @@ SD cards are very slow, use an external SSD instead!
    ```
    quit
    ```
-7. Now mount your partitions 
+6. Now sort out docker:
+   
+    1. Create docker directory:
+       ```
+       sudo mkdir -p /mnt/docker
+       ```
+    2. Mount partition[^6]:
+       ```
+       sudo mount -t ext4 -o defaults /dev/sda1 /mnt/docker
+       ```
+    3. Find out UUID of partition `/dev/sda1`:
+       ```
+       sudo blkid -o list
+       ```
+    4. Edit `/etc/fstab` to mount on boot, where `part_uuid` is the UUID of your partition from step 3:
+       ```
+       sudo nano /etc/fstab
+       ```
+       Add a new line with this:
+       ```
+       UUID=part_uuid /mnt/docker ext4 defaults 0
+       ```
+    6. Set permissions (docker will change these but whatevs):
+       ```
+       sudo chown jacob:jacob -R /mnt/docker
+       ```
+    7. Copy the existing Docker cache from `/var/lib/docker` to `/mnt/docker`[^7]:
+       ```
+       sudo cp -r /var/lib/docker /mnt/docker
+       ```
+    8. Edit `/etc/docker/daemon.json`:
+       ```
+       sudo nano /etc/docker/daemon.json
+       ```
+       To look like this:
+       ```json
+       {
+         "runtimes": {
+           "nvidia": {
+             "path": "nvidia-container-runtime",
+             "runtimeArgs": []
+          }
+        },
+        "default-runtime": "nvidia",
+        "data-root": "/mnt/docker"
+       }
+       ```
+    10. Restart docker:
+        ```
+        sudo systemctl restart docker
+        ```
+    11. Check it worked:
+        ```
+        sudo docker info | grep 'Docker Root Dir'
+        ```
+        You should sse `Docker Root Dir: /mnt/docker`
+  7. Over half way there! Now let's sort out the `data` directory used by `jetson-containers`:
 
 [^1]: See NVIDIA's [official getting started guide](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write)
 [^2]: Instructions from NVIDIA's [setup in headless mode](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#setup)
 [^3]: See Linuxize's [How to Enable SSH on Ubuntu 18.04](https://linuxize.com/post/how-to-enable-ssh-on-ubuntu-18-04/)
 [^4]: See DigitalOcean's [How to Set Up SSH Keys on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-1804)
 [^5]: Again, see DigitalOcean's [How to Set Up SSH Keys on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-1804)
+[^6]: See Gordon Lesti's [Mount ext4 USB flash drive to Raspberry Pi](https://gordonlesti.com/mount-ext4-usb-flash-drive-to-raspberry-pi/)
+[^7]: See @dusty-nv's [jetson-containers' `setup.md`](https://github.com/dusty-nv/jetson-containers/blob/master/docs/setup.md#relocating-docker-data-root)
+[^8]: Again, see Gordon Lesti's [Mount ext4 USB flash drive to Raspberry Pi](https://gordonlesti.com/mount-ext4-usb-flash-drive-to-raspberry-pi/)
