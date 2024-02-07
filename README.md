@@ -149,6 +149,10 @@ SD cards are very slow, use an external SSD instead!
         sudo docker info | grep 'Docker Root Dir'
         ```
         You should sse `Docker Root Dir: /mnt/docker`
+    12. Delete `/var/lib/docker`
+        ```
+        sudo rm -rf /var/lib/docker
+        ```
   8. Over half way there! Now let's sort out the `data` directory used by `jetson-containers`:
 
 [^1]: See NVIDIA's [official getting started guide](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write)
