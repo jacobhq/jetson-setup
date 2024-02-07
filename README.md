@@ -156,6 +156,47 @@ SD cards are very slow, use an external SSD instead!
         ```
   8. Over half way there! Now let's sort out the `data` directory used by `jetson-containers`:
 
+## Speed run
+One large snippet with no explanations - best for experienced users.
+```
+# Run over serial
+sudo apt update && sudo apt install openssh-server
+mkdir -p ~/.ssh
+echo public_key_string >> ~/.ssh/authorized_keys
+chmod -R go= ~/.ssh
+chown -R jacob:jacob ~/.ssh
+
+# Add PasswordAuthentication no to config
+sudo nano /etc/ssh/sshd_config
+sudo systemctl restart ssh
+
+# Disconnect from serial and run over network
+sudo apt upgrade && sudo apt install nano git python3-pip
+sudo usermod -aG docker $USER
+
+# ONLY do this to setup a new drive (indent = run in parted shell)
+sudo parted /dev/sda
+  print
+  rm 1
+  mkpart primary ext4 0GB 120GB
+  mkpart primary ext4 120GB 240GB
+  quit
+
+# Setup drive in docker (indent = put in nano editor)
+sudo mkdir -p /mnt/docker
+sudo mount -t ext4 -o defaults /dev/sda1 /mnt/docker
+sudo blkid -o list
+sudo nano /etc/fstab
+  UUID=part_uuid /mnt/docker ext4 defaults 0
+sudo chown jacob:jacob -R /mnt/docker
+sudo cp -r /var/lib/docker /mnt/docker
+sudo nano /etc/docker/daemon.json
+  "default-runtime":"nvidia",
+  "data-root":"/mnt/docker"
+sudo systemctl restart docker
+sudo rm -rf /var/lib/docker
+```
+
 [^1]: See NVIDIA's [official getting started guide](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write)
 [^2]: Instructions from NVIDIA's [setup in headless mode](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#setup)
 [^3]: See Linuxize's [How to Enable SSH on Ubuntu 18.04](https://linuxize.com/post/how-to-enable-ssh-on-ubuntu-18-04/)
