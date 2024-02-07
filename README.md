@@ -43,7 +43,7 @@ I've found myself having to setup my Jetson relatively frequently, so I compiled
     sudo systemctl restart ssh
     ```
 11. Disconnect from serial with `Ctrl+D` or the `logout` command, and unplug your computer from your Jetson
-12. SSH in over the network, where `jetson` is the hostname, and `jacob` is the usernaame. eg:
+12. SSH in over the network, where `jetson` is the hostname, and `jacob` is the username. eg:
     ```
     ssh jacob@jetson.local
     ```
