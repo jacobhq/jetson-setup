@@ -51,9 +51,9 @@ I've found myself having to setup my Jetson relatively frequently, so I compiled
     ```
     ssh jetson.local
     ```
-13. Now update your Jetson (takes about 10-15min), and install nice-to-haves:
+13. Now update your Jetson (takes about 10-15min), and install nice-to-haves (git and python3-pip are needed for [jetson-containers](#continuation-set-up-jetson-containers-docker-with-external-drive-wip)):
     ```
-    sudo apt upgrade && sudo apt install nano
+    sudo apt upgrade && sudo apt install nano git python3-pip
     ```
 Congrats, your jetson is ready to use!
 
