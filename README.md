@@ -1,6 +1,21 @@
 # Setting up your Jetson Nano
 I've found myself having to setup my Jetson relatively frequently, so I compiled a list of steps I use.
 
+## Use the script
+This script assumes you have set up SSH (see below), and have an external drive plugged in at `/dev/sda` with an existing docker cache on partition `/dev/sda1`. wget and curl should be preinstalled on Jetson Linux. This script:
+- **does not** touch your SSH config
+- **does not** adjust partitions on your external drive
+- **does** edit your `/etc/fstab` to mount your drive on boot
+- **does** DELETE `/var/lib/docker`, and edits docker config to point to external drive
+I encourage you to [read `setup.sh`](https://github.com/jacobhq/jetson-setup/blob/main/setup.sh) before you run it!
+
+```
+curl -sSL https://raw.githubusercontent.com/jacobhq/jetson-setup/main/setup.sh | bash
+```
+```
+wget -O - https://raw.githubusercontent.com/jacobhq/jetson-setup/main/setup.sh | bash
+```
+
 ## Step by step
 1. Download and flash Jetson Linux using Balena Etcher[^1]. Use flash from URL button:
   
