@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Upgrade and install necessary packages
-sudo apt update
-sudo apt upgrade -y
-sudo apt install -y nano git python3-pip
+sudo DEBIAN_FRONTEND=noninteractive apt update -y
+sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y
+sudo DEBIAN_FRONTEND=noninteractive apt install -y nano git python3-pip
 
 # Add the current user to the docker group
 sudo usermod -aG docker $USER
