@@ -13,7 +13,9 @@ These scripts assume and have an external drive plugged in at `/dev/sda` with an
 I encourage you to read [`scripts/1-setup-ssh.sh`](https://github.com/jacobhq/jetson-setup/blob/main/scripts/1-setup-ssh.sh) and [`scripts/2-setup-docker.sh`](https://github.com/jacobhq/jetson-setup/blob/main/scripts/2-setup-docker.sh) before you run them, or do a dry run first, so you understand _exactly_ what they do!
 
 <details>
-  <summary>Dry run</summary>
+  <summary>
+    <b>Dry run</b>
+  </summary>
   
   ```
   wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/1-setup-ssh.sh | bash -s -- --dry-run
