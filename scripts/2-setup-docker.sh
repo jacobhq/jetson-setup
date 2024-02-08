@@ -51,4 +51,6 @@ sudo systemctl restart docker
 # Remove old docker data
 sudo rm -rf /var/lib/docker
 
-echo "Setup completed successfully!"
+echo "Jetson setup completed successfully. Happy coding!"
+echo
+echo "If this script saved you time, please consider sponsoring me: https://github.com/sponsors/jacobhq"

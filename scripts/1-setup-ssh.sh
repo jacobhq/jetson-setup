@@ -52,4 +52,11 @@ run_command "sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication n
 # Restart SSH service
 run_command "sudo systemctl restart ssh"
 
-echo "SSH setup completed successfully!"
+echo "SSH setup completed successfully! To finish setting up your Jetson, disconnect from serial and connect back in over network."
+echo
+echo "Now run:"
+echo
+echo "wget -O - https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/2-setup-docker.sh | bash"
+echo
+echo "To set up docker on an external drive. For more details, see the repo: https://github.com/jacobhq/jetson-setup"
+echo "If this script saved you time, please consider sponsoring me: https://github.com/sponsors/jacobhq"
