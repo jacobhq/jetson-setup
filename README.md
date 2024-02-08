@@ -8,10 +8,10 @@ This script assumes you have set up SSH (see below), and have an external drive 
 - **does** edit your `/etc/fstab` to mount your drive on boot
 - **does** DELETE `/var/lib/docker`, and edits docker config to point to external drive
 
-I encourage you to [read `setup.sh`](https://github.com/jacobhq/jetson-setup/blob/main/setup.sh) before you run it!
+I encourage you to [read `scripts/2-setup-docker.sh`](https://github.com/jacobhq/jetson-setup/blob/main/scripts/2-setup-docker.sh) before you run it!
 
 ```
-wget -O - https://raw.githubusercontent.com/jacobhq/jetson-setup/main/setup.sh | bash
+wget -O - https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/2-setup-docker.sh | bash
 ```
 
 ## Step by step
