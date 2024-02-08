@@ -1,17 +1,38 @@
 # Setting up your Jetson Nano
 I've found myself having to setup my Jetson relatively frequently, so I compiled a list of steps I use.
 
-## Use the script
-This script assumes you have set up SSH (see below), and have an external drive plugged in at `/dev/sda` with an existing docker cache on partition `/dev/sda1`. wget should be preinstalled on Jetson Linux. This script:
-- **does not** touch your SSH config
-- **does not** adjust partitions on your external drive
-- **does** edit your `/etc/fstab` to mount your drive on boot
-- **does** DELETE `/var/lib/docker`, and edits docker config to point to external drive
+## Use the scripts
+These scripts assume and have an external drive plugged in at `/dev/sda` with an existing docker cache on partition `/dev/sda1`. These scripts:
+- **do not** transmit telementary or collect any data
+- **do not** touch your SSH config
+- **do not** adjust partitions on your external drive
+- **do** add the public key you specify to `~/.ssh/authorized_keys`
+- **do** edit your `/etc/fstab` to mount your drive on boot
+- **do** DELETE `/var/lib/docker`, and edits docker config to point to external drive
 
-I encourage you to [read `scripts/2-setup-docker.sh`](https://github.com/jacobhq/jetson-setup/blob/main/scripts/2-setup-docker.sh) before you run it!
+I encourage you to read [`scripts/1-setup-ssh.sh`](https://github.com/jacobhq/jetson-setup/blob/main/scripts/1-setup-ssh.sh) and [`scripts/2-setup-docker.sh`](https://github.com/jacobhq/jetson-setup/blob/main/scripts/2-setup-docker.sh) before you run them, or do a dry run first, so you understand _exactly_ what they do!
 
+<details>
+  <summary>Dry run</summary>
+  
+  ```
+  wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/1-setup-ssh.sh | bash -s -- --dry-run
+  ```
+  
+  ```
+  wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/2-setup-docker.sh | bash -s -- --dry-run
+  ```
+
+</details>
+
+Run the first script in the serial console:
 ```
-wget -O - https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/2-setup-docker.sh | bash
+wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/1-setup-ssh.sh | bash
+```
+
+Then disconnect from the serial console, and connect via SSH over the network before you run the second script:
+```
+wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/2-setup-docker.sh | bash
 ```
 
 ## Step by step
@@ -169,46 +190,10 @@ SD cards are very slow, use an external SSD instead!
         ```
   8. Over half way there! Now let's sort out the `data` directory used by `jetson-containers`:
 
-## Speed run
-One large snippet with no explanations - best for experienced users.
-```
-# Run over serial
-sudo apt update && sudo apt install openssh-server
-mkdir -p ~/.ssh
-echo public_key_string >> ~/.ssh/authorized_keys
-chmod -R go= ~/.ssh
-chown -R jacob:jacob ~/.ssh
+## Closing notes
+I worked hard to collate and perfect this process - if it helped you, please consider [sponsoring me]() through GitHub Sponsors! Or, just star the repo to help with my morale!
 
-# Add PasswordAuthentication no to config
-sudo nano /etc/ssh/sshd_config
-sudo systemctl restart ssh
-
-# Disconnect from serial and run over network
-sudo apt upgrade && sudo apt install nano git python3-pip
-sudo usermod -aG docker $USER
-
-# ONLY do this to setup a new drive (indent = run in parted shell)
-sudo parted /dev/sda
-  print
-  rm 1
-  mkpart primary ext4 0GB 120GB
-  mkpart primary ext4 120GB 240GB
-  quit
-
-# Setup drive in docker (indent = put in nano editor)
-sudo mkdir -p /mnt/docker
-sudo mount -t ext4 -o defaults /dev/sda1 /mnt/docker
-sudo blkid -o list
-sudo nano /etc/fstab
-  UUID=part_uuid /mnt/docker ext4 defaults 0
-sudo chown jacob:jacob -R /mnt/docker
-sudo cp -r /var/lib/docker /mnt/docker
-sudo nano /etc/docker/daemon.json
-  "default-runtime":"nvidia",
-  "data-root":"/mnt/docker"
-sudo systemctl restart docker
-sudo rm -rf /var/lib/docker
-```
+<br />
 
 [^1]: See NVIDIA's [official getting started guide](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#write)
 [^2]: Instructions from NVIDIA's [setup in headless mode](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit#setup)
