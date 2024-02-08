@@ -34,22 +34,15 @@ run_command() {
 # Update package list and install OpenSSH server
 run_command "sudo apt update && sudo apt install openssh-server"
 
-# Create SSH directory if not exists
+# Set up ssh
 run_command "mkdir -p ~/.ssh"
-
-# Add public key to authorized_keys file
-run_command "echo 'public_key_string' >> ~/.ssh/authorized_keys"
+read -p "Enter your public key to authorize (it is not transmitted anywhere, go read the code): " public_key
+run_command "echo \"$public_key\" >> ~/.ssh/authorized_keys"
 
 # Restrict permissions on the SSH directory
 run_command "chmod -R go= ~/.ssh"
-
-# Change ownership of the SSH directory
 run_command "chown -R $USER:$USER ~/.ssh"
-
-# Add PasswordAuthentication no to sshd_config
 run_command "sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config"
-
-# Restart SSH service
 run_command "sudo systemctl restart ssh"
 
 echo "SSH setup completed successfully! To finish setting up your Jetson, disconnect from serial and connect back in over network. Now run:"
