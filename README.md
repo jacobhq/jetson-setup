@@ -40,9 +40,9 @@ Then disconnect from the serial console, and connect via SSH over the network be
 wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/2-setup-docker.sh | bash
 ```
 
-You can _optionally_ import an existing SSH key with this script:
+You can _optionally_ import an existing SSH key with this script, but replace your keys in the below snippet:
 ```
-wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/3-add-ssh-key.sh | bash
+wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/3-add-ssh-key.sh | bash -s -- "public_key_string" "private_key_string"
 ```
 
 ## Step by step
