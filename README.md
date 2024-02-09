@@ -193,7 +193,7 @@ SD cards are very slow, use an external SSD instead!
   8. Over half way there! Now let's sort out the `data` directory used by `jetson-containers` (I'm waiting on a response in dusty-nv/jetson-containers#382 to try and find out where the `data` dir is). **Your Jetson is now setup, and usable.**
 
 ## Closing notes
-I worked hard to collate and perfect this process - if it helped you, please consider [sponsoring me]() through GitHub Sponsors! Or, just star the repo to help with my morale!
+I worked hard to collate and perfect this process - if it helped you, please consider [sponsoring me](https://github.com/sponsors/jacobhq) through GitHub Sponsors! Or, just star the repo to help with my morale!
 
 <br />
 
