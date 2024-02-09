@@ -64,16 +64,14 @@ run_command "sudo chown $USER:$USER -R /mnt/docker"
 # Configure Docker daemon
 run_command "sudo tee /etc/docker/daemon.json > /dev/null <<EOF
 {
-   \"runtimes\":{
-      \"nvidia\":{
-         \"path\":\"nvidia-container-runtime\",
-         \"runtimeArgs\":[
-            
-         ]
+   \"runtimes\": {
+      \"nvidia\": {
+         \"path\": \"nvidia-container-runtime\",
+         \"runtimeArgs\": []
       }
    },
-   \"default-runtime\":\"nvidia\",
-   \"data-root\":\"/mnt/docker\"
+   \"default-runtime\": \"nvidia\",
+   \"data-root\": \"/mnt/docker\"
 }
 EOF"
 
