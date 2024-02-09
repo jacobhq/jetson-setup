@@ -30,9 +30,9 @@ I encourage you to read [`scripts/1-setup-ssh.sh`](https://github.com/jacobhq/je
   ```
 </details>
 
-Run the first script in the serial console:
+Run the first script in the serial console, making sure to pass in your public key to authorize:
 ```
-wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/1-setup-ssh.sh | bash
+wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/1-setup-ssh.sh | bash -s -- "public_key_string"
 ```
 
 Then disconnect from the serial console, and connect via SSH over the network before you run the second script:
