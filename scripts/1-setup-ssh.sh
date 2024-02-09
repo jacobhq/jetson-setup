@@ -2,7 +2,7 @@
 
 # Function to display usage information
 usage() {
-  echo "Usage: $0 [--dry-run]"
+  echo "Usage: $0 [--dry-run] [public_key]"
   exit 1
 }
 
@@ -16,7 +16,8 @@ while [ "$#" -gt 0 ]; do
       dry_run=true
       ;;
     * )
-      usage
+      public_key="$1"
+      shift
       ;;
   esac
   shift
@@ -36,7 +37,11 @@ run_command "sudo apt update && sudo apt install openssh-server"
 
 # Set up ssh
 run_command "mkdir -p ~/.ssh"
-read -p "Enter your public key to authorize (it is not transmitted anywhere, go read the code): " public_key
+
+if [ -z "$public_key" ]; then
+  read -p "Enter your public key to authorize (it is not transmitted anywhere, go read the code): " public_key
+fi
+
 run_command "echo \"$public_key\" >> ~/.ssh/authorized_keys"
 
 # Restrict permissions on the SSH directory
@@ -45,9 +50,9 @@ run_command "chown -R $USER:$USER ~/.ssh"
 run_command "sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config"
 run_command "sudo systemctl restart ssh"
 
-echo "SSH setup completed successfully! To finish setting up your Jetson, disconnect from serial and connect back in over network. Now run:"
+echo "SSH setup completed successfully! To finish setting up your Jetson, disconnect from serial and connect back in over the network. Now run:"
 echo
 echo "wget -O - https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/2-setup-docker.sh | bash"
 echo
-echo "To set up docker on an external drive. For more details, see the repo: https://github.com/jacobhq/jetson-setup"
+echo "To set up Docker on an external drive. For more details, see the repo: https://github.com/jacobhq/jetson-setup"
 echo "If this script saved you time, please consider sponsoring me: https://github.com/sponsors/jacobhq"
