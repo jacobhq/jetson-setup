@@ -25,6 +25,9 @@ I encourage you to read [`scripts/1-setup-ssh.sh`](https://github.com/jacobhq/je
   wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/2-setup-docker.sh | bash -s -- --dry-run
   ```
 
+  ```
+  wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/3-add-ssh-key.sh | bash -s -- --dry-run
+  ```
 </details>
 
 Run the first script in the serial console:
@@ -35,6 +38,11 @@ wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/1-
 Then disconnect from the serial console, and connect via SSH over the network before you run the second script:
 ```
 wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/2-setup-docker.sh | bash
+```
+
+You can _optionally_ import an existing SSH key with this script:
+```
+wget -qO- https://raw.githubusercontent.com/jacobhq/jetson-setup/main/scripts/3-add-ssh-key.sh | bash
 ```
 
 ## Step by step
