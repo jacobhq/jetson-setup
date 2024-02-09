@@ -2,7 +2,7 @@
 
 # Function to display usage information
 usage() {
-  echo "Usage: $0 [--dry-run]"
+  echo "Usage: $0 [--dry-run] <public_key> <private_key>"
   exit 1
 }
 
@@ -31,12 +31,14 @@ run_command() {
   fi
 }
 
-echo "This script sets up an existing SSH key on device. It *does not* share or transmit your keys."
+if [ "$#" -ne 2 ]; then
+  usage
+fi
 
-# Prompt user for SSH key type
-# read -p "Enter SSH key type (e.g., rsa, ecdsa, ed25519): " key_type
-read -p "Enter your SSH public key: " public_key
-read -p "Enter your SSH private key: " private_key
+public_key="$1"
+private_key="$2"
+
+echo "This script sets up an existing SSH key on the device. It *does not* share or transmit your keys."
 
 run_command 'mkdir -p ~/.ssh'
 run_command "echo '$public_key' >> ~/.ssh/id_ed25519.pub"
