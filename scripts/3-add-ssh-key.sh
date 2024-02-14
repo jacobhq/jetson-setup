@@ -41,8 +41,8 @@ private_key="$2"
 echo "This script sets up an existing SSH key on the device. It *does not* share or transmit your keys."
 
 run_command 'mkdir -p ~/.ssh'
-run_command "echo '$public_key' >> ~/.ssh/id_ed25519.pub"
-run_command "echo '$private_key' > ~/.ssh/id_ed25519"
+run_command "echo \"$public_key\" > ~/.ssh/id_ed25519.pub"
+run_command "echo \"$private_key\" > ~/.ssh/id_ed25519"
 
 # Set correct permissions on the SSH directory and files
 run_command 'chmod 700 ~/.ssh'
