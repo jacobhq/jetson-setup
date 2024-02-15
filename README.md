@@ -198,7 +198,7 @@ SD cards are very slow, use an external SSD instead!
         ```
         sudo rm -rf /var/lib/docker
         ```
-  8. Over half way there! Now let's sort out the `data` directory used by `jetson-containers` (I'm waiting on a response in dusty-nv/jetson-containers#382 to try and find out where the `data` dir is). **Your Jetson is now setup, and usable.**
+  8. Over half way there! Now let's sort out the `data` directory used by `jetson-containers`. [TODO] I'm working out the best way to do this next step. (see discussion in dusty-nv/jetson-containers#382). **Your Jetson is now setup, and usable.**
 
 ## Closing notes
 I worked hard to collate and perfect this process - if it helped you, please consider [sponsoring me](https://github.com/sponsors/jacobhq) through GitHub Sponsors! Or, just star the repo to help with my morale!
